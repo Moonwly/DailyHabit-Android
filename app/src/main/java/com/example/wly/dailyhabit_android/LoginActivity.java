@@ -18,9 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;

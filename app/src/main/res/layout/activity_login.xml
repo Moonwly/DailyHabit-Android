@@ -9,7 +9,7 @@
         android:layout_height="551dp"
         android:orientation="vertical"
         android:gravity="center_vertical|center_horizontal"
-        style="@style/margin_10"
+        style="@style/margin"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_editor_absoluteX="8dp">
 
@@ -44,21 +44,45 @@
             </TableRow>
         </TableLayout>
 
-        <EditText
-            android:id="@+id/login_email"
-            android:inputType="textEmailAddress"
+        <!--<EditText-->
+            <!--android:id="@+id/login_email"-->
+            <!--android:inputType="textEmailAddress"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--style="@style/margin"-->
+            <!--android:hint="@string/input_username_hint" />-->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/margin_10"
-            android:hint="@string/input_username_hint" />
+            style="@style/margin">
+            <EditText
+                android:id="@+id/login_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_email_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/login_password"
-            android:inputType="textPassword"
+        <!--<EditText-->
+            <!--android:id="@+id/login_password"-->
+            <!--android:inputType="textPassword"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--style="@style/margin"-->
+            <!--android:hint="@string/input_password_hint" />-->
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/margin_10"
-            android:hint="@string/input_password_hint" />
+            style="@style/margin">
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/input_password_hint"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/login"
@@ -73,7 +97,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/character"
             android:text="@string/register"
-            style="@style/margin_10" />
+            style="@style/margin" />
 
     </LinearLayout>
 
