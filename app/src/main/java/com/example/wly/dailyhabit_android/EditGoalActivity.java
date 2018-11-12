@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -47,6 +48,8 @@ public class EditGoalActivity extends AppCompatActivity{
     private CheckBox selectThursday;
     private CheckBox selectFriday;
     private CheckBox selectSaturday;
+
+    private Button deleteGoal;
 
     private TextView finishModifyBtn;
 
@@ -110,6 +113,7 @@ public class EditGoalActivity extends AppCompatActivity{
         selectSaturday = (CheckBox) findViewById(R.id.select_saturday);
         finishModifyBtn = (TextView) findViewById(R.id.finish_modify);
         selectTypeGroup = (RadioGroup) findViewById(R.id.select_type_group);
+        deleteGoal = (Button) findViewById(R.id.delete_goal);
         getGoalInfo(goal_id);
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +202,22 @@ public class EditGoalActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
 
+            }
+        });
+
+        deleteGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String deleteGoalURL = "/goal/delete_goal";
+                    String method = "GET";
+                    String transValue = URLEncoder.encode("goal_id", "UTF-8") + "=" +
+                            URLEncoder.encode(String.valueOf(goal.getGoalId()), "UTF-8");
+                    HttpTask httpTask = new HttpTask(transValue, deleteGoalURL, method, deleteGoalListener);
+                    httpTask.execute();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -300,4 +320,22 @@ public class EditGoalActivity extends AppCompatActivity{
         }
     };
 
+    private OnAsyncTaskListener deleteGoalListener = new OnAsyncTaskListener() {
+        @Override
+        public void onSuccess(String string) {
+            try {
+                JSONTokener jsonTokener = new JSONTokener(string);
+                JSONObject jsonRet = (JSONObject) jsonTokener.nextValue();
+                int code = jsonRet.getInt("code");
+                String msg = jsonRet.getString("msg");
+                if (code != 0) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    return ;
+                }
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 }

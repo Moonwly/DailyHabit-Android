@@ -41,10 +41,18 @@ public class TodayFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initInterface();
+    }
+
     private void initInterface() {
         try {
             TextView tabTitleText = getActivity().findViewById(R.id.tab_title_text);
             tabTitleText.setText("今日目标");
+            TextView addGoal = getActivity().findViewById(R.id.add_goal_button);
+            addGoal.setText("+");
             String getUserTodayGoalURL = "/goal/get_user_today_goals";
             String method = "GET";
             String todayDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());

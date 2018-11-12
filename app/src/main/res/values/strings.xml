@@ -34,4 +34,7 @@
     <string name="saturday">周六</string>
     <string name="sunday">周日</string>
 
+    <string name="logout">注销</string>
+    <string name="delete">删除</string>
+
 </resources>

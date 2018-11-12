@@ -110,14 +110,13 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("session", User.session);
                 editor.commit();
                 finish();
+                Intent mainIntent = new Intent(context, MainActivity.class);
+                startActivity(mainIntent);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent mainIntent = new Intent(context, MainActivity.class);
-            startActivity(mainIntent);
         }
     };
-
 
 
 }

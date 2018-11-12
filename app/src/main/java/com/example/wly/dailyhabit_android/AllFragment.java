@@ -49,6 +49,8 @@ public class AllFragment extends Fragment {
     private void initInterface() {
         TextView tabTitleText = getActivity().findViewById(R.id.tab_title_text);
         tabTitleText.setText("全部目标");
+        TextView addGoal = getActivity().findViewById(R.id.add_goal_button);
+        addGoal.setText("+");
         String getUserAllGoalURL = "/goal/get_goal_by_user";
         String method = "GET";
         HttpTask httpTask = new HttpTask("", getUserAllGoalURL, method, loadAllGoalListener);
