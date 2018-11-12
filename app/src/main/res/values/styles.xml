@@ -16,10 +16,21 @@
         <item name="android:layout_marginRight">10dp</item>
     </style>
 
+    <style name="margin_left_and_right">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+
     <style name="login_button" parent="margin">
         <item name="android:background">@color/colorAccent</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
     <style name="RadioGroupButtonStyle" >
@@ -30,5 +41,10 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/unchecked</item>
+    </style>
+
+    <style name="input_title">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>

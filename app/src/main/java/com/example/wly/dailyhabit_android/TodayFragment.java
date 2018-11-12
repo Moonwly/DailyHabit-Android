@@ -43,6 +43,8 @@ public class TodayFragment extends Fragment {
 
     private void initInterface() {
         try {
+            TextView tabTitleText = getActivity().findViewById(R.id.tab_title_text);
+            tabTitleText.setText("今日目标");
             String getUserTodayGoalURL = "/goal/get_user_today_goals";
             String method = "GET";
             String todayDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -74,8 +76,6 @@ public class TodayFragment extends Fragment {
                 JSONArray goalList = body.getJSONArray("goal_list");
                 GridLayout todayGoalList = getView().findViewById(R.id.today_goal_list);
                 todayGoalList.removeAllViews();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD");
-                SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
                 if (goalList != null) {
                     for (int i = 0; i < goalList.length(); i++) {
                         JSONObject goalInfo = goalList.getJSONObject(i);
@@ -84,42 +84,35 @@ public class TodayFragment extends Fragment {
                         Boolean goalStatus = goalInfo.getBoolean("goal_status");
                         int goalType = goalInfo.getInt("goal_type");
                         String inspiration = goalInfo.getString("inspiration");
-                        String startDateStr = goalInfo.getString("start_date");
-                        Date startDate = dateFormat.parse(startDateStr);
-                        String endDateStr = goalInfo.getString("end_date");
-                        Date endDate = dateFormat.parse(endDateStr);
+                        String startDate = goalInfo.getString("start_date");
+                        String endDate = goalInfo.getString("end_date");
                         String repeatTime = goalInfo.getString("repeat_time");
                         int recordedTimes = goalInfo.getInt("recorded_times");
                         Boolean isReminding = goalInfo.getBoolean("is_reminding");
-                        String remindingTimeStr = goalInfo.getString("reminding_time");
+                        String remindingTime = goalInfo.getString("reminding_time");
                         Boolean isRecoededToday = goalInfo.getBoolean("is_recorded_today");
-                        Date remindingTime = new Date();
-                        if (!remindingTimeStr.equals("")) {
-                            remindingTime = timeFormat.parse(remindingTimeStr);
-                        }
 
                         final Goal goal = new Goal(goalId, goalName, goalStatus, goalType, inspiration, startDate,
                                 endDate, repeatTime, recordedTimes, isReminding, remindingTime, isRecoededToday);
 
-                        GoalCard aGoalCard = new GoalCard(goal, context, getActivity());
-                        todayGoalList.addView(aGoalCard);
+                        TodayGoalCard todayGoalCard = new TodayGoalCard(goal, context);
+                        todayGoalList.addView(todayGoalCard);
                     }
                 }
 
-            } catch (JSONException | ParseException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     };
-
 }
 
-class GoalCard extends CardView {
-    private int goalId;
+class TodayGoalCard extends CardView {
+
     private int goalType;
     private String goalName;
     private int recordedTimes;
+//    1: 可打卡 0:不可打卡
     private Boolean isRecoeded;
 
     private ImageView goalImage;
@@ -127,23 +120,18 @@ class GoalCard extends CardView {
     private TextView haveRecordedView;
 
     private Context context;
-    private Activity activity;
-//    1: 可打卡 0:不可打卡
-    Boolean goalStatus;
 
-    public GoalCard(final Goal goal, Context context, Activity activity) {
+    public TodayGoalCard(final Goal goal, Context context) {
         super(context);
-        this.goalId = goal.getGoalId();
         this.goalName = goal.getGoalName();
         this.recordedTimes = goal.getRecordedTimes();
         this.goalType = goal.getGoalType();
         this.isRecoeded = goal.getRecoededToday();
-        this.activity = activity;
         this.context = context;
 
         LayoutInflater.from(context).inflate(R.layout.today_card, this);
 
-        goalImage = findViewById(R.id.card_type_image);
+        goalImage = findViewById(R.id.today_card_type_image);
 //        1:健康 2:学习 3:工作 4:日常
         switch (this.goalType) {
             case 1:
@@ -168,9 +156,9 @@ class GoalCard extends CardView {
         }
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, 300);
         goalImage.setLayoutParams(params);
-        goalNameView = findViewById(R.id.goal_name);
+        goalNameView = findViewById(R.id.today_goal_name);
         goalNameView.setText(this.goalName);
-        haveRecordedView = findViewById(R.id.have_recorded_times);
+        haveRecordedView = findViewById(R.id.today_have_recorded_times);
         haveRecordedView.setText("已完成" + this.recordedTimes + "天");
 
         this.setOnClickListener(new View.OnClickListener() {

@@ -8,16 +8,20 @@ public class Goal {
     private Boolean goalStatus;
     private int goalType;
     private String inspiration;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String repeatTime;
     private int recordedTimes;
     private Boolean isReminding;
-    private Date remindingTime;
+    private String remindingTime;
     private Boolean isRecoededToday;
 
-    public Goal(int goalId, String goalName, Boolean goalStatus, int goalType, String inspiration, Date startDate, Date endDate,
-                String repeatTime, int recordedTimes, Boolean isReminding, Date remindingTime, Boolean isRecoededToday) {
+    public Goal() {
+
+    }
+
+    public Goal(int goalId, String goalName, Boolean goalStatus, int goalType, String inspiration, String startDate, String endDate,
+                String repeatTime, int recordedTimes, Boolean isReminding, String remindingTime, Boolean isRecoededToday) {
         this.goalId = goalId;
         this.goalName = goalName;
         this.goalStatus = goalStatus;
@@ -30,6 +34,10 @@ public class Goal {
         this.isReminding = isReminding;
         this.remindingTime = remindingTime;
         this.isRecoededToday = isRecoededToday;
+    }
+    public Goal(int goalId, String goalName, Boolean goalStatus, int goalType, String inspiration, String startDate, String endDate,
+                String repeatTime, int recordedTimes, Boolean isReminding, String remindingTime) {
+        this(goalId, goalName, goalStatus, goalType, inspiration, startDate, endDate, repeatTime, recordedTimes, isReminding, remindingTime, null);
     }
 
     public int getGoalId() {
@@ -72,19 +80,19 @@ public class Goal {
         this.inspiration = inspiration;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -112,11 +120,11 @@ public class Goal {
         isReminding = reminding;
     }
 
-    public Date getRemindingTime() {
+    public String getRemindingTime() {
         return remindingTime;
     }
 
-    public void setRemindingTime(Date remindingTime) {
+    public void setRemindingTime(String remindingTime) {
         this.remindingTime = remindingTime;
     }
 

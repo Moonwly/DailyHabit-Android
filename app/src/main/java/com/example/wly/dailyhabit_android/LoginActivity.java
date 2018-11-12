@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("session", User.session);
                 editor.commit();
                 finish();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

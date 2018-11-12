@@ -9,4 +9,29 @@
     <string name="today">今天</string>
     <string name="all">全部</string>
     <string name="mine">我的</string>
+    <string name="add">+</string>
+    <string name="input_goal_name">给目标命名</string>
+    <string name="select_goal_type">挑选目标类型</string>
+    <string name="input_inspiration">写一句激励自己的话</string>
+    <string name="start_date">开始时间</string>
+    <string name="end_date">结束时间</string>
+    <string name="repeat">重复</string>
+
+    <string name="health">健康</string>
+    <string name="study">学习</string>
+    <string name="work">工作</string>
+    <string name="daily">日常</string>
+    <string name="others">其他</string>
+    <string name="my_goal">我的目标</string>
+    <string name="new_goal">新建目标</string>
+    <string name="finish">完成</string>
+
+    <string name="monday">周一</string>
+    <string name="tuesday">周二</string>
+    <string name="wednesday">周三</string>
+    <string name="thursday">周四</string>
+    <string name="friday">周五</string>
+    <string name="saturday">周六</string>
+    <string name="sunday">周日</string>
+
 </resources>
