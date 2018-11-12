@@ -2,6 +2,9 @@ package com.example.wly.dailyhabit_android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.example.wly.dailyhabit_android.ConnectServer.HttpTask;
 import com.example.wly.dailyhabit_android.ConnectServer.OnAsyncTaskListener;
 import com.example.wly.dailyhabit_android.Info.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -24,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private TextView registerBtn;
     private Context context;
+    private SharedPreferences account;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,19 @@ public class LoginActivity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.login_email);
         password = (EditText) findViewById(R.id.login_password);
+        account = PreferenceManager.getDefaultSharedPreferences(this);
+        String sessionSaved = account.getString("session", "");
+        if (!sessionSaved.equals("")) {
+            User.email = account.getString("email", "");
+            User.password = account.getString("password", "");
+            User.id = account.getInt("id", -1);
+            User.username = account.getString("username", "");
+            User.session = account.getString("session", "");
+
+            Intent mainIntent = new Intent(context, MainActivity.class);
+            startActivity(mainIntent);
+        }
+
         loginBtn = (Button) findViewById(R.id.login);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent registerIntent = new Intent(context, RegisterActivity.class);
-                startActivityForResult(registerIntent, 2);
+                startActivity(registerIntent);
             }
         });
     }
@@ -79,12 +98,27 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     return ;
                 }
+                JSONObject body = jsonRet.getJSONObject("body");
+                User.id = body.getInt("user_id");
+                User.username = body.getString("username");
+
+                SharedPreferences.Editor editor = account.edit();
+                editor.putString("email", User.email);
+                editor.putString("password", User.password);
+                editor.putInt("id", User.id);
+                editor.putString("username", User.username);
+                editor.putString("session", User.session);
+                editor.commit();
+                finish();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Intent mainIntent = new Intent(context, MainActivity.class);
-            startActivityForResult(mainIntent, 1);
+            startActivity(mainIntent);
         }
     };
+
+
 
 }

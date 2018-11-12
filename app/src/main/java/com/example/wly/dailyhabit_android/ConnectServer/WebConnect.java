@@ -19,25 +19,39 @@ class WebConnect {
 
     static String postGetJson(String transValue, String url, String method) {
         try {
-            URL mUrl = new URL(headUrl + url);
-            HttpURLConnection mHttpURLConnection = (HttpURLConnection) mUrl.openConnection();
-            mHttpURLConnection.setConnectTimeout(15000);
-            mHttpURLConnection.setReadTimeout(15000);
-            mHttpURLConnection.setRequestMethod(method);
-            if (User.session != null)
-                mHttpURLConnection.setRequestProperty("Cookie", User.session);
-            else
-                mHttpURLConnection.setRequestProperty("Connection", "Keep-Alive");
-            mHttpURLConnection.setDoInput(true);
-            mHttpURLConnection.setDoOutput(true);
-            mHttpURLConnection.setUseCaches(false);
-            mHttpURLConnection.connect();
+            HttpURLConnection mHttpURLConnection;
+            if (method.equals("POST")) {
+                URL mUrl = new URL(headUrl + url);
+                mHttpURLConnection = (HttpURLConnection) mUrl.openConnection();
+                mHttpURLConnection.setConnectTimeout(15000);
+                mHttpURLConnection.setReadTimeout(15000);
+                mHttpURLConnection.setRequestMethod(method);
+                if (User.session != null)
+                    mHttpURLConnection.setRequestProperty("Cookie", User.session);
+                else
+                    mHttpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                mHttpURLConnection.setDoInput(true);
+                mHttpURLConnection.setDoOutput(true);
+                mHttpURLConnection.setUseCaches(false);
+                mHttpURLConnection.connect();
 
-            DataOutputStream dos = new DataOutputStream(mHttpURLConnection.getOutputStream());
-            dos.write(transValue.getBytes());
-            dos.flush();
-            dos.close();
-
+                DataOutputStream dos = new DataOutputStream(mHttpURLConnection.getOutputStream());
+                dos.write(transValue.getBytes());
+                dos.flush();
+                dos.close();
+            }
+            else {
+                URL mUrl = new URL(headUrl + url + "?" + transValue);
+                mHttpURLConnection = (HttpURLConnection) mUrl.openConnection();
+                mHttpURLConnection.setRequestMethod(method);
+                mHttpURLConnection.setConnectTimeout(15000);
+                mHttpURLConnection.setReadTimeout(15000);
+                if (User.session != null)
+                    mHttpURLConnection.setRequestProperty("Cookie", User.session);
+                else
+                    mHttpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                mHttpURLConnection.connect();
+            }
             int respondCode = mHttpURLConnection.getResponseCode();
             Log.d("respondCode","respondCode="+respondCode );
             String type = mHttpURLConnection.getContentType();

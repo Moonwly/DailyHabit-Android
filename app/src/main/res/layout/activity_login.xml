@@ -44,13 +44,6 @@
             </TableRow>
         </TableLayout>
 
-        <!--<EditText-->
-            <!--android:id="@+id/login_email"-->
-            <!--android:inputType="textEmailAddress"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/margin"-->
-            <!--android:hint="@string/input_username_hint" />-->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,13 +57,6 @@
                 android:maxLines="1"/>
         </android.support.design.widget.TextInputLayout>
 
-        <!--<EditText-->
-            <!--android:id="@+id/login_password"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/margin"-->
-            <!--android:hint="@string/input_password_hint" />-->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
