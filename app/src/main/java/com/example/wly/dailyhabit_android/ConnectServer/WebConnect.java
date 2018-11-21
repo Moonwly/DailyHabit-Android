@@ -12,7 +12,6 @@ import java.net.URL;
 
 class WebConnect {
     private static String headUrl = "http://118.25.73.227/api";
-
     private static String response(int code, String msg) {
         return "{ \"code\":" + code + ", \"msg\":\"" + msg + "\"}";
     }

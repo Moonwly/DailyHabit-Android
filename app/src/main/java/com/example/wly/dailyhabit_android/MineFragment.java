@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.wly.dailyhabit_android.ConnectServer.HttpTask;
+import com.example.wly.dailyhabit_android.ConnectServer.OnAsyncTaskListener;
 import com.example.wly.dailyhabit_android.Info.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 
 public class MineFragment extends Fragment {
@@ -35,14 +43,40 @@ public class MineFragment extends Fragment {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = account.edit();
-                editor.clear();
-                editor.commit();
-                getActivity().finish();
-                Intent intent = new Intent(context, LoginActivity.class);
-                startActivity(intent);
+                String logoutURL = "/user/logout";
+                String method = "GET";
+                HttpTask httpTask = new HttpTask("", logoutURL, method, logoutListener);
+                httpTask.execute();
             }
         });
         return view;
     }
+
+    private OnAsyncTaskListener logoutListener = new OnAsyncTaskListener() {
+        @Override
+        public void onSuccess(String string) {
+            try {
+                JSONTokener jsonTokener = new JSONTokener(string);
+                JSONObject jsonRet = (JSONObject) jsonTokener.nextValue();
+                int code = jsonRet.getInt("code");
+                String msg = jsonRet.getString("msg");
+                if (code != 0) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            account = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = account.edit();
+            editor.clear();
+            editor.commit();
+
+            getActivity().finish();
+            Intent intent = new Intent(context, LoginActivity.class);
+            startActivity(intent);
+
+        }
+    };
+
 }
